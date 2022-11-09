@@ -16,7 +16,7 @@ const {
 let client;
 console.log(ENV);
 
-if (ENV === "DEV") {
+if (ENV === "test") {
   client = new Pool({
     host: POSTGRES_HOST,
     port: Port as unknown as number,
@@ -26,7 +26,7 @@ if (ENV === "DEV") {
   });
 }
 
-if (ENV === "PRODUCTION") {
+if (ENV === "dev") {
   client = new Pool({
     host: POSTGRES_HOST,
     port: Port as unknown as number,
