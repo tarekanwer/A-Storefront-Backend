@@ -28,7 +28,7 @@ export class UserStore {
       conn.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not find the user . Error ${err}`);
+      throw new Error(`Could not find the user ${id} . Error ${err}`);
     }
   }
 
@@ -58,7 +58,7 @@ export class UserStore {
       conn.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not delete user . Error ${err}`);
+      throw new Error(`Could not delete user ${id} . Error ${err}`);
     }
   }
 }
