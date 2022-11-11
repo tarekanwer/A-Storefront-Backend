@@ -1,7 +1,7 @@
 import Client from "../database";
 
 export type Order = {
-  id: number;
+  id?: number;
   product_id: number;
   quantity: number;
   user_id: number;
@@ -21,7 +21,7 @@ export class OrderStore {
     }
   }
 
-  async show(id: string): Promise<Order> {
+  async show(id: number): Promise<Order> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM orders WHERE id = ($1)";
@@ -37,9 +37,8 @@ export class OrderStore {
     try {
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO orders (id, product_id, quantity, user_id , status) VALUES($1, $2, $3, $4, $5) RETURNING *";
+        "INSERT INTO orders (product_id, quantity, user_id , status) VALUES($1, $2, $3, $4) RETURNING *";
       const result = await conn.query(sql, [
-        o.id,
         o.product_id,
         o.quantity,
         o.user_id,
@@ -48,11 +47,11 @@ export class OrderStore {
       conn.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not add new order ${o.id}. Error ${err}`);
+      throw new Error(`Could not add new order. Error ${err}`);
     }
   }
 
-  async delete(id: string): Promise<Order> {
+  async delete(id: number): Promise<Order> {
     try {
       const conn = await Client.connect();
       const sql = "DELETE FROM orders WHERE id = ($1)";
