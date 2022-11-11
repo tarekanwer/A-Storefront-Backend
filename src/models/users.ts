@@ -13,9 +13,8 @@ export class UserStore {
       const conn = await Client.connect();
       const sql = "SELECT * FROM users";
       const result = await conn.query(sql);
-      const lst = result.rows;
       conn.release();
-      return lst;
+      return result.rows;
     } catch (err) {
       throw new Error(`Could not get the users . Error ${err}`);
     }
@@ -26,9 +25,8 @@ export class UserStore {
       const conn = await Client.connect();
       const sql = "SELECT * FROM users WHERE id = ($1)";
       const result = await conn.query(sql, [id]);
-      const user = result.rows[0];
       conn.release();
-      return user;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not find the user ${id} . Error ${err}`);
     }
@@ -44,9 +42,8 @@ export class UserStore {
         u.lastname,
         u.password,
       ]);
-      const user = result.rows[0];
       conn.release();
-      return user;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not add new user . Error ${err}`);
     }
@@ -57,9 +54,8 @@ export class UserStore {
       const conn = await Client.connect();
       const sql = "DELETE FROM users WHERE id = ($1)";
       const result = await conn.query(sql, [id]);
-      const user = result.rows[0];
       conn.release();
-      return user;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not delete user ${id} . Error ${err}`);
     }

@@ -13,9 +13,8 @@ export class ProductStore {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products";
       const result = await conn.query(sql);
-      const lst = result.rows;
       conn.release();
-      return lst;
+      return result.rows;
     } catch (err) {
       throw new Error(`Could not get Products. Error ${err}`);
     }
@@ -26,9 +25,8 @@ export class ProductStore {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products WHERE id = ($1)";
       const result = await conn.query(sql, [id]);
-      const product = result.rows[0];
       conn.release();
-      return product;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not find product ${id}. Error ${err}`);
     }
@@ -40,9 +38,8 @@ export class ProductStore {
       const sql =
         "INSERT INTO products (name , price , category) VALUES($1, $2, $3) RETURNING *";
       const result = await conn.query(sql, [p.name, p.price, p.category]);
-      const product = result.rows[0];
       conn.release();
-      return product;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not add product : ${p.name}. Error ${err}`);
     }
@@ -53,9 +50,8 @@ export class ProductStore {
       const conn = await Client.connect();
       const sql = "DELETE FROM products WHERE id = ($1)";
       const result = await conn.query(sql, [id]);
-      const product = result.rows[0];
       conn.release();
-      return product;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not delete product ${id}. Error ${err}`);
     }
