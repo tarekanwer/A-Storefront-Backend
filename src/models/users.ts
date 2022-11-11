@@ -1,9 +1,9 @@
 import Client from "../database";
 
 export type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id?: number;
+  firstname: string;
+  lastname: string;
   password: string;
 };
 
@@ -20,7 +20,7 @@ export class UserStore {
     }
   }
 
-  async show(id: string): Promise<User> {
+  async show(id: number): Promise<User> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM users WHERE id = ($1)";
@@ -36,11 +36,10 @@ export class UserStore {
     try {
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO users(id , firstName, lastName , password) VALUES($1, $2, $3, $4) RETURNING *";
+        "INSERT INTO users(firstName, lastName , password) VALUES($1, $2, $3) RETURNING *";
       const result = await conn.query(sql, [
-        u.id,
-        u.firstName,
-        u.lastName,
+        u.firstname,
+        u.lastname,
         u.password,
       ]);
       conn.release();
@@ -50,7 +49,7 @@ export class UserStore {
     }
   }
 
-  async delete(id: string): Promise<User> {
+  async delete(id: number): Promise<User> {
     try {
       const conn = await Client.connect();
       const sql = "DELETE FROM users WHERE id = ($1)";
