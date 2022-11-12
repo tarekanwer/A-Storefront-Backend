@@ -35,7 +35,7 @@ const create = async (req: Request, res: Response) => {
     };
     const product = await store.create(addedProduct);
     res.status(200);
-    res.json(`order ${product.id} was added successfully`);
+    res.json(`product ${product.id} was added successfully`);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -47,7 +47,7 @@ const remove = async (req: Request, res: Response) => {
     const id = req.body.id;
     await store.delete(id);
     res.status(200);
-    res.json(`order ${id} was removed successfully`);
+    res.json(`product ${id} was removed successfully`);
   } catch (err) {
     res.status(400);
     res.json(err);
