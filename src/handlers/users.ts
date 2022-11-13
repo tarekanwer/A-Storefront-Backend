@@ -1,5 +1,9 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { User, UserStore } from "../models/users";
+import dotenv from "dotenv";
+import { getTokenByUser, verifyAuthToken } from "./helpers";
+dotenv.config();
+const secret_token = process.env.TOKEN_SECRET as string;
 
 const store = new UserStore();
 
@@ -27,18 +31,19 @@ const show = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+  const addUser: User = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    password: req.body.password,
+  };
   try {
-    const addUser: User = {
-      firstname: req.body.firstName,
-      lastname: req.body.lastName,
-      password: req.body.password,
-    };
     const user = await store.create(addUser);
+    // const token = jwt.sign({ user: addUser }, secret_token);
     res.status(200);
-    res.json(`user ${user.id} was added successfully`);
+    res.json(getTokenByUser(user));
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json(`${err}`);
   }
 };
 
@@ -47,7 +52,7 @@ const remove = async (req: Request, res: Response) => {
     const id = req.body.id;
     await store.delete(id);
     res.status(200);
-    res.json(`user ${id} was removed successfully`);
+    res.json(`user was removed successfully`);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -56,9 +61,9 @@ const remove = async (req: Request, res: Response) => {
 
 const UserRoutes = (app: express.Application) => {
   app.get("/users", index);
-  app.get("/users/:id", show);
+  app.get("/users/:id", verifyAuthToken, show);
   app.post("/users", create);
-  app.delete("users/:id", remove);
+  app.delete("/users/:id", verifyAuthToken, remove);
 };
 
 export default UserRoutes;

@@ -1,5 +1,6 @@
-import express, { Response, Request } from "express";
+import express, { Response, Request, NextFunction } from "express";
 import { Product, ProductStore } from "../models/products";
+import { verifyAuthToken } from "./helpers";
 
 const store = new ProductStore();
 
@@ -56,9 +57,9 @@ const remove = async (req: Request, res: Response) => {
 
 const ProductRoutes = (app: express.Application) => {
   app.get("/products", index);
-  app.get("/products/:id", show);
-  app.post("/products", create);
-  app.delete("/products/:id", remove);
+  app.get("/products/:id", verifyAuthToken, show);
+  app.post("/products", verifyAuthToken, create);
+  app.delete("/products/:id", verifyAuthToken, remove);
 };
 
 export default ProductRoutes;
