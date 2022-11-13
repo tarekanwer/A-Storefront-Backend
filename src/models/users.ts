@@ -1,4 +1,11 @@
 import Client from "../database";
+import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+
+dotenv.config();
+
+const pepper = process.env.BCRYPT_PASSWORD as string;
+const saltRounds = process.env.SALT_ROUNDS as string;
 
 export type User = {
   id?: number;
@@ -36,12 +43,10 @@ export class UserStore {
     try {
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO users(firstName, lastName , password) VALUES($1, $2, $3) RETURNING *";
-      const result = await conn.query(sql, [
-        u.firstname,
-        u.lastname,
-        u.password,
-      ]);
+        "INSERT INTO users(firstName, lastName , password_digest ) VALUES($1, $2, $3) RETURNING *";
+
+      const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
+      const result = await conn.query(sql, [u.firstname, u.lastname, hash]);
       conn.release();
       return result.rows[0];
     } catch (err) {
@@ -59,5 +64,21 @@ export class UserStore {
     } catch (err) {
       throw new Error(`Could not delete user ${id} . Error ${err}`);
     }
+  }
+
+  async authenticate(u: User): Promise<User | null> {
+    const conn = await Client.connect();
+    const sql =
+      "SELECT password_digest FROM users WHERE firstname = ($1) AND lastname = ($2)";
+    const result = await conn.query(sql, [u.firstname, u.lastname]);
+    console.log(u.password + pepper);
+    if (result.rows.length) {
+      const user = result.rows[0];
+      console.log(user);
+      if (bcrypt.compareSync(u.password + pepper, user.password_digest)) {
+        return user;
+      }
+    }
+    return null;
   }
 }
