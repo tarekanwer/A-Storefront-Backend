@@ -59,17 +59,17 @@ any sensitive information is hashed with bcrypt.
 ### 2. Models
 
 Models are built based on the databases having 3 databases : products , orders and users. having CRUD actions : 
-**Example** index to get all rows regarding database
-**Example** show to get certain instance
-**Example** create to init a instance
-**Example** delete to remove certain instance
+- **Example** index to get all rows regarding database
+- **Example** show to get certain instance
+- **Example** create to init a instance
+- **Example** delete to remove certain instance
 
 ### 3. Express Handlers
-Express handlers are made upon each model : products , orders and users. haveing 4 routes each following the example shown below.
-**Example**: A INDEX route: '/oreders' [GET] 
-**Example**: A SHOW route: '/oreders/:id' [GET] 
-**Example**: A CREATE route: '/oreders' [POST] 
-**Example**: A DELETE route: '/oreders/:id' [DELETE] 
+Express handlers are made upon each model : products , orders and users. having 4 routes each following the example shown below.
+- **Example**: A INDEX route: '/orders' [GET] 
+- **Example**: A SHOW route: '/orders/:id' [GET] 
+- **Example**: A CREATE route: '/orders' [POST] 
+- **Example**: A DELETE route: '/orders/:id' [DELETE] 
 any sensitive information was protected using JWT methods.
 
 ### 4. test (Jasmine)
