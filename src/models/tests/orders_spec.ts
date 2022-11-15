@@ -7,6 +7,11 @@ const product_store = new ProductStore();
 const user_store = new UserStore();
 
 describe("Orders Model tests", () => {
+  "use strict";
+  let result;
+  beforeEach(function () {
+    result = {};
+  });
   it("should have index method", () => {
     expect(store.index).toBeDefined();
   });
@@ -30,7 +35,7 @@ describe("Orders Model tests", () => {
       price: 10,
       category: "Books",
     });
-    const result = await store.create({
+    result = await store.create({
       product_id: 1,
       quantity: 1,
       user_id: 1,
@@ -45,7 +50,7 @@ describe("Orders Model tests", () => {
     });
   });
   it("index method should list all orders", async () => {
-    const result = await store.index();
+    result = await store.index();
     expect(result).toEqual([
       {
         id: 1,
@@ -57,7 +62,7 @@ describe("Orders Model tests", () => {
     ]);
   });
   it("show method should return intended order", async () => {
-    const result = await store.show(1);
+    result = await store.show(1);
     expect(result).toEqual({
       id: 1,
       product_id: 1,
@@ -68,7 +73,7 @@ describe("Orders Model tests", () => {
   });
   it("delete method should remove intended order", async () => {
     await store.delete(1);
-    const result = await store.index();
+    result = await store.index();
     expect(result).toEqual([]);
   });
 });

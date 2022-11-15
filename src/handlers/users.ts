@@ -3,7 +3,6 @@ import { User, UserStore } from "../models/users";
 import dotenv from "dotenv";
 import { getTokenByUser, verifyAuthToken } from "./helpers";
 dotenv.config();
-const secret_token = process.env.TOKEN_SECRET as string;
 
 const store = new UserStore();
 

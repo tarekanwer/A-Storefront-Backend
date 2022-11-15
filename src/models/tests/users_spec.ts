@@ -1,8 +1,24 @@
 import { User, UserStore } from "../users";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
+const pepper = process.env.BCRYPT_PASSWORD;
 
 const store = new UserStore();
 
 describe("Users Model tests", () => {
+  "use strict";
+  let result;
+  let hash;
+  beforeEach(function () {
+    result = {};
+    hash = false;
+  });
+  const newUser = {
+    firstname: "John",
+    lastname: "Doe",
+    password: "password123",
+  };
   it("should have index method", () => {
     expect(store.index).toBeDefined();
   });
@@ -16,41 +32,43 @@ describe("Users Model tests", () => {
     expect(store.delete).toBeDefined();
   });
   it("create method should add user", async () => {
-    const result = await store.create({
-      firstname: "John",
-      lastname: "Doe",
-      password: "password123",
-    });
+    result = await store.create(newUser);
+    // console.log(result);
+    hash = bcrypt.compareSync(newUser.password + pepper, result.password);
     expect(result).toEqual({
       id: 1,
       firstname: "John",
       lastname: "Doe",
-      password: "password123",
+      password: hash ? result.password : "not defined",
     });
   });
   it("index method should return a list of users", async () => {
-    const result = await store.index();
+    result = await store.index();
+    // console.log(result);
+    hash = bcrypt.compareSync(newUser.password + pepper, result[0].password);
     expect(result).toEqual([
       {
         id: 1,
         firstname: "John",
         lastname: "Doe",
-        password: "password123",
+        password: hash ? result[0].password : "not defined",
       },
     ]);
   });
   it("show method should return the correct user", async () => {
-    const result = await store.show(1);
+    result = await store.show(1);
+    // console.log(result);
+    hash =  bcrypt.compareSync(newUser.password + pepper, result.password);
     expect(result).toEqual({
       id: 1,
       firstname: "John",
       lastname: "Doe",
-      password: "password123",
+      password: hash ? result.password : "not defined",
     });
   });
   it("delete method should remove certain user", async () => {
-    store.delete(1);
-    const result = await store.index();
+    await store.delete(1);
+    result = await store.index();
     expect(result).toEqual([]);
   });
 });
