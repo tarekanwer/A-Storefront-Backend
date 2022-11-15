@@ -1,5 +1,4 @@
 import supertest from "supertest";
-import { Product } from "../products";
 import { User } from "../users";
 import { Order } from "../orders";
 import app from "../../server";
