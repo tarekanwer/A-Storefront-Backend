@@ -1,4 +1,4 @@
-import express, { Response, Request, NextFunction } from "express";
+import express, { Response, Request } from "express";
 import { Product, ProductStore } from "../models/products";
 import { verifyAuthToken } from "./helpers";
 

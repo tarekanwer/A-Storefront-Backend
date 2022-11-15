@@ -1,22 +1,21 @@
 import supertest from "supertest";
 import { User } from "../users";
-import dotenv from "dotenv";
 import app from "../../server";
 
-dotenv.config();
 let token: string;
 
 const request = supertest(app);
 
-describe("User Handler", () => {
+describe("User end point Handler", () => {
+  console.clear();
   "use strict";
   let response;
   beforeEach(function () {
     response = {};
   });
   const newUser: User = {
-    firstname: "tarek",
-    lastname: "anwer",
+    firstname: "John",
+    lastname: "Doe",
     password: "password123",
   };
   it("should return 200 status upon adding new user", async (done) => {
@@ -32,11 +31,11 @@ describe("User Handler", () => {
   });
   it("show method should return 200 status upon request", async (done) => {
     const userData = {
-      "id": 1,
+      id: 1,
     };
     response = await request
       .get("/users/1")
-      .send(userData)
+      .send(JSON.stringify(userData))
       .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
     done();
@@ -44,29 +43,29 @@ describe("User Handler", () => {
 
   it("show method should return 400 status upon unauthorized request", async (done) => {
     const userData = {
-      "id": 1,
+      id: 1,
     };
-    response = await request.get("/users/1").send(userData);
+    response = await request.get("/users/1").send(JSON.stringify(userData));
     expect(response.status).toBe(401);
     done();
   });
 
   it("delete method should return 200 status upon request", async (done) => {
     const userData = {
-      "id": 1,
+      id: 1,
     };
-    response = await request.delete("/users/1").send(userData);
+    response = await request.delete("/users/1").send(JSON.stringify(userData));
     expect(response.status).toBe(401);
     done();
   });
 
   it("delete method should return 200 status upon request", async (done) => {
     const userData = {
-      "id": 1,
+      id: 1,
     };
     response = await request
       .delete("/users/1")
-      .send(userData)
+      .send(JSON.stringify(userData))
       .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
     done();
