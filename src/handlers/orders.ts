@@ -59,7 +59,7 @@ const remove = async (req: Request, res: Response) => {
 const OrderRoutes = (app: express.Application) => {
   app.get("/orders", verifyAuthToken, index);
   app.get("/orders/:id", verifyAuthToken, show);
-  app.post("orders", verifyAuthToken, create);
+  app.post("/orders", verifyAuthToken, create);
   app.delete("/orders/:id", verifyAuthToken, remove);
 };
 
