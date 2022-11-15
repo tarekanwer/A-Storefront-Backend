@@ -70,6 +70,7 @@ Express handlers are made upon each model : products , orders and users. having 
 - **Example**: A SHOW route: '/orders/:id' [GET] 
 - **Example**: A CREATE route: '/orders' [POST] 
 - **Example**: A DELETE route: '/orders/:id' [DELETE] 
+
 any sensitive information was protected using JWT methods.
 
 ### 4. test (Jasmine)
