@@ -13,8 +13,14 @@ const usersWithOrders = async (_req: Request, res: Response) => {
   const users = await dashboard.usersWithOrders();
   res.json(users);
 };
+
+const fiveMostExpensive = async (_req: Request, res: Response) => {
+  const users = await dashboard.fiveMostExpensive();
+  res.json(users);
+};
 const dashboardRoutes = (app: express.Application) => {
   app.get("/products-in-orders", productsInOrders);
   app.get("/users-with-orders", usersWithOrders);
+  app.get("/five-most-expensive", fiveMostExpensive);
 };
 export default dashboardRoutes;

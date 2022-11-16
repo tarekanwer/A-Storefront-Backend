@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 import { User, UserStore } from "../models/users";
 import dotenv from "dotenv";
 import { getTokenByUser, verifyAuthToken } from "./helpers";
@@ -19,7 +19,7 @@ const index = async (_req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     const user = await store.show(id);
     res.status(200);
     res.json(user);
@@ -48,7 +48,7 @@ const create = async (req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     await store.delete(id);
     res.status(200);
     res.json(`user was removed successfully`);

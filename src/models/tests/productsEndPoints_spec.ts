@@ -39,43 +39,25 @@ describe("Product end point handler", () => {
   });
 
   it("should return 401 status upon unauthorized requesting of certain product", async () => {
-    const productData = {
-      id: 1,
-    };
-    response = await request
-      .get("/products/1")
-      .send(JSON.stringify(productData));
+    response = await request.get("/products/1");
     expect(response.status).toBe(401);
   });
 
   it("should return 200 status upon requesting of certain product", async () => {
-    const productData = {
-      id: 1,
-    };
     response = await request
       .get("/products/1")
-      .send(JSON.stringify(productData))
       .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
   it("delete method should return 401 status upon unauthorized request", async () => {
-    const productData = {
-      id: 1,
-    };
-    response = await request
-      .delete("/products/1")
-      .send(JSON.stringify(productData));
+    response = await request.delete("/products/1");
     expect(response.status).toBe(401);
   });
 
   it("delete method should return 200 status upon request", async () => {
-    const productData = {
-      id: 1,
-    };
     response = await request
       .delete("/products/1")
-      .send(JSON.stringify(productData))
       .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });

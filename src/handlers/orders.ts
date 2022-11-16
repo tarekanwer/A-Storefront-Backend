@@ -11,7 +11,7 @@ const index = async (_req: Request, res: Response) => {
     res.json(orders);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json(`${err}`);
   }
 };
 
@@ -62,14 +62,15 @@ const addProduct = async (req: Request, res: Response) => {
     product_id: req.body.product_id,
     quantity: req.body.quantity,
     user_id: req.body.user_id,
-    status: req.body.status,
+    status: req.body.status as string,
   };
   try {
     const addedProduct = await store.addProduct(addedOrder);
+    res.status(200);
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
-    res.json(err);
+    res.json(`${err}`);
   }
 };
 

@@ -17,7 +17,7 @@ const index = async (_req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     const product = await store.show(id);
     res.status(200);
     res.json(product);
@@ -45,7 +45,7 @@ const create = async (req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     await store.delete(id);
     res.status(200);
     res.json(`product ${id} was removed successfully`);

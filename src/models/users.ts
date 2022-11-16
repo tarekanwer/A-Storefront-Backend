@@ -66,19 +66,4 @@ export class UserStore {
     }
   }
 
-  async authenticate(u: User): Promise<User | null> {
-    const conn = await Client.connect();
-    const sql =
-      "SELECT * FROM users WHERE firstname = ($1) AND lastname = ($2)";
-    const result = await conn.query(sql, [u.firstname, u.lastname]);
-    console.log(u.password + pepper);
-    if (result.rows.length) {
-      const user = result.rows[0];
-      console.log(user);
-      if (bcrypt.compareSync(u.password + pepper, user.password)) {
-        return user;
-      }
-    }
-    return null;
-  }
 }
