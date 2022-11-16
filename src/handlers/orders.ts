@@ -17,7 +17,7 @@ const index = async (_req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     const order = await store.show(id);
     res.status(200);
     res.json(order);
@@ -46,7 +46,7 @@ const create = async (req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id as unknown as number;
     await store.delete(id);
     res.status(200);
     res.json(`order ${id} was removed successfully`);
@@ -56,13 +56,16 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-const addProduct = async (_req: Request, res: Response) => {
-  const orderId: string = _req.params.id;
-  const productId: string = _req.body.productId;
-  const quantity: number = parseInt(_req.body.quantity);
-
+const addProduct = async (req: Request, res: Response) => {
+  const addedOrder: Order = {
+    id: req.params.id as unknown as number,
+    product_id: req.body.product_id,
+    quantity: req.body.quantity,
+    user_id: req.body.user_id,
+    status: req.body.status,
+  };
   try {
-    const addedProduct = await store.addProduct(quantity, orderId, productId);
+    const addedProduct = await store.addProduct(addedOrder);
     res.json(addedProduct);
   } catch (err) {
     res.status(400);

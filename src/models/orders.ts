@@ -63,24 +63,20 @@ export class OrderStore {
     }
   }
 
-  async addProduct(
-    quantity: number,
-    orderId: string,
-    productId: string
-  ): Promise<Order> {
+  async addProduct(o: Order): Promise<Order> {
     // get order to see if it is open
     try {
       const ordersql = "SELECT * FROM orders WHERE id=($1)";
       //@ts-ignore
       const conn = await Client.connect();
 
-      const result = await conn.query(ordersql, [orderId]);
+      const result = await conn.query(ordersql, [o.id]);
 
       const order = result.rows[0];
 
-      if (order.status !== "open") {
+      if (order.status !== "active") {
         throw new Error(
-          `Could not add product ${productId} to order ${orderId} because order status is ${order.status}`
+          `Could not add product ${o.product_id} to order ${o.id} because order status is ${order.status}`
         );
       }
 
@@ -95,7 +91,7 @@ export class OrderStore {
       //@ts-ignore
       const conn = await Client.connect();
 
-      const result = await conn.query(sql, [quantity, orderId, productId]);
+      const result = await conn.query(sql, [o.quantity, o.id, o.product_id]);
 
       const order = result.rows[0];
 
@@ -104,7 +100,7 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add product ${productId} to order ${orderId}: ${err}`
+        `Could not add product ${o.product_id} to order ${o.id}: ${err}`
       );
     }
   }
