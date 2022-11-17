@@ -8,10 +8,9 @@ export class DashboardQueries {
       //@ts-ignore
       const conn = await Client.connect();
       const sql =
-        "SELECT * FROM products INNER JOIN order_products ON product.id = order_products.id";
+        "SELECT name , price , category  FROM products INNER JOIN order_products ON products.id = order_products.product_id";
 
       const result = await conn.query(sql);
-
       conn.release();
 
       return result.rows;
@@ -21,12 +20,12 @@ export class DashboardQueries {
   }
 
   // Get all users that have made orders
-  async usersWithOrders(): Promise<User[]> {
+  async usersWithOrders(): Promise<{ firstname: string; lastname: string }[]> {
     try {
       //@ts-ignore
       const conn = await Client.connect();
       const sql =
-        "SELECT * FROM users INNER JOIN orders ON users.id = orders.user_id";
+        "SELECT firstname , lastname FROM users INNER JOIN orders ON users.id = orders.user_id";
 
       const result = await conn.query(sql);
 
@@ -41,16 +40,16 @@ export class DashboardQueries {
   async fiveMostExpensive(): Promise<Product[]> {
     try {
       //@ts-ignore
-      const conn = await Client.connect()
-      const sql = 'SELECT * FROM products ORDER BY price DESC LIMIT 5'
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM products ORDER BY price DESC LIMIT 5";
 
-      const result = await conn.query(sql)
+      const result = await conn.query(sql);
 
-      conn.release()
+      conn.release();
 
-      return result.rows
+      return result.rows;
     } catch (err) {
-      throw new Error(`unable get products by price: ${err}`)
-    } 
+      throw new Error(`unable get products by price: ${err}`);
+    }
   }
 }

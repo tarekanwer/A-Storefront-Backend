@@ -1,6 +1,9 @@
-import { Order, OrderStore } from "../orders";
-import { User, UserStore } from "../users";
-import { Product, ProductStore } from "../products";
+import { OrderStore } from "../orders";
+import { UserStore } from "../users";
+import { ProductStore } from "../products";
+import dotenv from "dotenv";
+
+
 
 const store = new OrderStore();
 const product_store = new ProductStore();
@@ -11,6 +14,18 @@ describe("Orders Model tests", () => {
   let result;
   beforeEach(function () {
     result = {};
+  });
+  beforeAll(async () => {
+    await user_store.create({
+      firstname: "John",
+      lastname: "Doe",
+      password: "password123",
+    });
+    await product_store.create({
+      name: "Novel",
+      price: 10,
+      category: "Books",
+    });
   });
   it("should have index method", () => {
     expect(store.index).toBeDefined();
@@ -25,16 +40,6 @@ describe("Orders Model tests", () => {
     expect(store.delete).toBeDefined();
   });
   it("create method should add new order", async () => {
-    await user_store.create({
-      firstname: "John",
-      lastname: "Doe",
-      password: "password123",
-    });
-    await product_store.create({
-      name: "Novel",
-      price: 10,
-      category: "Books",
-    });
     result = await store.create({
       product_id: 1,
       quantity: 1,

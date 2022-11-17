@@ -62,7 +62,7 @@ const addProduct = async (req: Request, res: Response) => {
     product_id: req.body.product_id,
     quantity: req.body.quantity,
     user_id: req.body.user_id,
-    status: req.body.status as string,
+    status: req.body.status,
   };
   try {
     const addedProduct = await store.addProduct(addedOrder);
@@ -70,6 +70,7 @@ const addProduct = async (req: Request, res: Response) => {
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
+    console.log(`${err}`);
     res.json(`${err}`);
   }
 };
