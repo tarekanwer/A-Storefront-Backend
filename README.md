@@ -66,6 +66,8 @@ Databases was built using postgresSQL having 3 databases :
 
 any sensitive information is hashed with bcrypt.
 
+the database are run on Port 6000 as mentioned in the env variables.
+
 databases are migrated up using the following script : ```db-migrate up``` on the other hand to migrate databases down we use the following script ```db-migrate down```
 
 To setup the database the following steps should be followed : 
