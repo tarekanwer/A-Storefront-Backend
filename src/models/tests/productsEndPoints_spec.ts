@@ -41,7 +41,6 @@ describe("Product end point handler", () => {
   it("should return status 200 upon requesting all products", async () => {
     response = await request
       .get("/products")
-      .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
