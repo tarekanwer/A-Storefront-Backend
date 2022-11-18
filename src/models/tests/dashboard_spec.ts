@@ -2,7 +2,7 @@ import { DashboardQueries } from "../../services/dashboard";
 import { Order, OrderStore } from "../orders";
 import { User, UserStore } from "../users";
 import { Product, ProductStore } from "../products";
-
+import clearDatabase from "./helpers";
 const store = new DashboardQueries();
 const orderStore = new OrderStore();
 const userStore = new UserStore();
@@ -34,6 +34,9 @@ describe("dashboard Model tests", () => {
       user_id: 1,
       status: "active",
     });
+  });
+  afterAll(async () => {
+    await clearDatabase();
   });
   it("should have five most expensive method", () => {
     expect(store.fiveMostExpensive).toBeDefined();

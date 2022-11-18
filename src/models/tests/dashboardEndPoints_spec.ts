@@ -3,6 +3,8 @@ import { User } from "../users";
 import { Order } from "../orders";
 import { Product } from "../products";
 import app from "../../server";
+import clearDatabase from "./helpers";
+
 
 let token: string;
 const request = supertest(app);
@@ -48,6 +50,10 @@ describe("dashboard end point test", () => {
       .post("/orders/1/products")
       .send(JSON.stringify(addedOrder))
       .set("Authorization", `bearer ${token}`);
+  });
+
+  afterAll(async () => {
+    await clearDatabase();
   });
 
   it("should return 200 status upon requesting users with orders", async () => {

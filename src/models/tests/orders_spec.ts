@@ -1,7 +1,8 @@
 import { OrderStore } from "../orders";
 import { UserStore } from "../users";
 import { ProductStore } from "../products";
-import dotenv from "dotenv";
+import clearDatabase from "./helpers";
+
 
 
 
@@ -27,6 +28,11 @@ describe("Orders Model tests", () => {
       category: "Books",
     });
   });
+
+  afterAll(async () => {
+    await clearDatabase();
+  });
+  
   it("should have index method", () => {
     expect(store.index).toBeDefined();
   });

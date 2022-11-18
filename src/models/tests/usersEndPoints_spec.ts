@@ -1,6 +1,8 @@
 import supertest from "supertest";
 import { User } from "../users";
 import app from "../../server";
+import clearDatabase from "./helpers";
+
 
 let token: string;
 
@@ -12,6 +14,9 @@ describe("User end point Handler", () => {
   let response;
   beforeEach(function () {
     response = {};
+  });
+  afterAll(async () => {
+    await clearDatabase();
   });
   const newUser: User = {
     firstname: "John",

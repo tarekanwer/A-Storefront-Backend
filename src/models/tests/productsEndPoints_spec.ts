@@ -2,6 +2,8 @@ import supertest from "supertest";
 import { Product } from "../products";
 import { User } from "../users";
 import app from "../../server";
+import clearDatabase from "./helpers";
+
 
 let token: string;
 const request = supertest(app);
@@ -12,6 +14,10 @@ describe("Product end point handler", () => {
   let response;
   beforeEach(function () {
     response = {};
+  });
+  
+  afterAll(async () => {
+    await clearDatabase();
   });
   const newProduct: Product = {
     name: "novel",

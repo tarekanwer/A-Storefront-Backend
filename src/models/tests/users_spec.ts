@@ -1,6 +1,8 @@
 import { User, UserStore } from "../users";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import clearDatabase from "./helpers";
+
 dotenv.config();
 const pepper = process.env.BCRYPT_PASSWORD;
 
@@ -14,6 +16,11 @@ describe("Users Model tests", () => {
     result = {};
     hash = false;
   });
+  
+  afterAll(async () => {
+    await clearDatabase();
+  });
+
   const newUser = {
     firstname: "John",
     lastname: "Doe",

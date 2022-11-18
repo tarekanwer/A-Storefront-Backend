@@ -1,4 +1,6 @@
 import { Product, ProductStore } from "../products";
+import clearDatabase from "./helpers";
+
 
 const store = new ProductStore();
 
@@ -8,6 +10,11 @@ describe("Products Model tests", () => {
   beforeEach(function () {
     result = {};
   });
+
+  afterAll(async () => {
+    await clearDatabase();
+  });
+
   it("should have an index method", () => {
     expect(store.index).toBeDefined();
   });
