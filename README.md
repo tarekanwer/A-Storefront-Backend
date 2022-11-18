@@ -103,9 +103,9 @@ any sensitive information was protected using JWT methods.
 
 there are 2 types of tests made for this project : end to end and model tests to ensure that every piece of code is made trully.
 while having to many test in the project there are some suggestions made testing process go as expected :
-1- it is needed to isolate the tests made each time you run npm test using f command before describe method.
-2- it is also recommended to have the database cleared before each test.
-3- it is also recommneded to have the concole cleared using cls command before each test.
+- it is also recommended to have the database cleared before each test.
+- it is needed to have random spec to false on jasmine support.
+
 
 ## Test the app
 
