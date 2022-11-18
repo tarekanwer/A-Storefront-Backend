@@ -11,7 +11,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Delete [token required]
 
 #### Users
-- Index 
+- Index [token required]
 - Show [token required]
 - Create 
 - Delete [token required]
@@ -21,24 +21,37 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Show [token required]
 - Create [token required]
 - Delete [token required]
+- addProduct [token required]
+#### Dashboard
+- fiveMostExpensive (to get the top 5 expensive products)
+- usersWithOrders (to get the users who have made orders)
+- productsInOrders (to get the products in all orders)
+
 
 ## Data Shapes
 #### Product
--  id
-- name
-- price
-- category
+-  id integer
+- name string
+- price number 
+- category string 
 
 #### User
-- id
-- firstName
-- lastName
-- password
+- id integer
+- firstName string
+- lastName string 
+- password string
 
 #### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+- id number 
+- product_id number 
+- quantity of each product in the order number
+- user_id number
+- status of order (active or complete) string
+
+#### Order products
+- id integer,
+- quantity integer,
+- order_id integer,
+- product_id integer 
+
 
