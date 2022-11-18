@@ -44,15 +44,10 @@ describe("Product end point handler", () => {
     expect(response.status).toBe(200);
   });
 
-  it("should return 401 status upon unauthorized requesting of certain product", async () => {
-    response = await request.get("/products/1");
-    expect(response.status).toBe(401);
-  });
 
   it("should return 200 status upon requesting of certain product", async () => {
     response = await request
       .get("/products/1")
-      .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
