@@ -3,14 +3,13 @@ import { User } from "../users";
 import app from "../../server";
 import clearDatabase from "./helpers";
 
-
 let token: string;
 
 const request = supertest(app);
 
 describe("User end point Handler", () => {
   console.clear();
-  "use strict";
+  ("use strict");
   let response;
   beforeEach(function () {
     response = {};
@@ -29,7 +28,9 @@ describe("User end point Handler", () => {
     expect(response.status).toBe(200);
   });
   it("should return 200 status upon requesting index method", async () => {
-    response = await request.get("/users");
+    response = await request
+      .get("/users")
+      .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });
   it("show method should return 200 status upon request", async () => {

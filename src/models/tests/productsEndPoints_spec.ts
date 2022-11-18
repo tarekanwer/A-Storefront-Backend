@@ -4,7 +4,6 @@ import { User } from "../users";
 import app from "../../server";
 import clearDatabase from "./helpers";
 
-
 let token: string;
 const request = supertest(app);
 
@@ -15,7 +14,7 @@ describe("Product end point handler", () => {
   beforeEach(function () {
     response = {};
   });
-  
+
   afterAll(async () => {
     await clearDatabase();
   });
@@ -40,7 +39,9 @@ describe("Product end point handler", () => {
   });
 
   it("should return status 200 upon requesting all products", async () => {
-    response = await request.get("/products");
+    response = await request
+      .get("/products")
+      .set("Authorization", `bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
